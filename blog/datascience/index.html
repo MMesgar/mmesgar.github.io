@@ -211,7 +211,7 @@
           <p>
       </dd>
 
-      <dt class="col-sm-3"> Data Pre-processing</dt>
+      <dt class="col-sm-3"> Data Pre-processing (Wrangling) </dt>
       <dd class="col-sm-9">
           <p> (1) Identify and handleing missing values (NaN or np.nan in python). A missing value is captured usually as "?", "N/A", "0" or just a blank cell.
           How to deal with them? There different possibilities such as
@@ -248,15 +248,23 @@
 
       <dt class="col-sm-3"> Exploratory Data Analysis (EDA) </dt>
       <dd class="col-sm-9">
+          <p>
+              The first step in data analysis is EDA.
+          </p>
           <p> The main goal of EDA is to summarize main characteristics of data,  gain a better understanding of data, uncover relationships between attributes (features or variables), and extract important variables.
               The main question in EDA is that what are the characteristics which have the most impact on the value of target attribute.
           </p>
+          <p>
+              EDA should be conducted on the whole dataset (including training, validation, and test).
+          </p>
+          <p>
           Descriptive statistics: provide mean, min, max and std of values of an attribute (variable) in a dataset.
           How to get them? In python, we use (1) pandas.dataframe.describe(include="all"),   (2) for categorical variables we use df['x'].value_counts().to_frame(),
           (3) Boxplots are useful charts for EDA. They help to see the distribution of a variable and also to find the outliers easily.
           The Package ''seaborn'' has the function ''boxplot'' with which you can easily draw a boxplot between a categorical variable (x) and continues variable (y).
            and (4) Scatter plots are used to find relation between two continues variables. Usually, target variable is on y axis and independent variable is on x axis.
           To draw scatter plot, the package "matplotlib" (e.g. "plt.scatter(x,y)") is very handy.
+          </p>
           <p>
               Grouping: This technique is applied to categorical variables using "pandas.dataframe.groupby()". The idea is to group the data into subsets according to the categories of a one variable.
               To visualize the results of the groupby() function, pivot tables are very handy. In pivot table, one independent variable is x-axis, the other independent variable is on y-axis and the target variable is the value of the cells.
@@ -274,14 +282,15 @@
               Please note that Chi-Square can also be used to test if predictions of a model and the ground truth labels are dependent.
               In python, we use "scipy.stats.chi2_contigency(cont_table, correction=True)". It gives us a p_value. If p_values < 0.05 then we reject the null hypothesis.
           </p>
-      </dd>
-
-      <dt class="col-sm-3"> Model Development</dt>
-      <dd class="col-sm-9">
           <p>
-             The output of the EDA step should be a subset of features to be used as "predictors" in our model development.
+              The output of the EDA step should be a subset of features to be used as "predictors" in our model development.
               These predictors are known as independent variables which help to estimate the values of a target variable or dependent variables.
           </p>
+      </dd>
+
+      <dt class="col-sm-3">Model Development</dt>
+      <dd class="col-sm-9">
+
           <p>
               Regression: When the target variable is a continues value, we use regression models.
               (1) LinearRegression:
@@ -290,7 +299,8 @@
               (1.2) Multiple Linear Regression (MLR): y = b_0 + b_1* x_1 + b_2*x_2 + ... + b_n*x_n. This model can be implemented also using sklearn.linear_models.LinearRegression.
               (1.3) Polynomial Regression (PR): y= b_0 + b_1 *x_1 +b_2* (x_2)^2 + ....
               As we see the estimator is still a linear function but over ploynomial features.
-              There is a degree for ploynomiality, i.e. 2 in the above equation. This should be given to the constructor, that is again "sklearn.linear_models.LinearRegression".
+              There is a degree for ploynomiality, i.e. 2 in the above equation. This degree is a hyper-parameter that determins the number of final feauteres and consequently the number of parameters (coefficients).
+              This degree should be given to the constructor, that is again "sklearn.linear_models.LinearRegression".
               The only difference from MLR is that features should be transformed to the ploynomial space.
               sklearn has a funtion for it, i.e. "z = sklearn.preprocessing.PolynomialFeatures(degree=2).fit_transform(df['x1','x2'])"
               "z" contains the ploynomial features over x1 and x2 from the EDA. For 4 features we get 15 polynomial features.
@@ -298,14 +308,68 @@
               An important point in PR is that in order to combine polynomial combinations of features, the feature values should in the same scale.
               So before running polynomialization over predictors, we should scale their values "sklearn.preprocessing.StandardScaler()".
               If we use "pipe = sklearn.pipeline.Pipeline([StandardScaler(),PolynomialFeatures(degree=2,include_bias=False),LinearRegression()])" then this pipe can be fit directly to the raw features df['x1','x2'].
+              (1.4) Ridge: The constructor is in "sklearn.linear_model.Ridge()".
+              Ridge regression is a linear regression that is employed in a Multiple regression model when "Multicollinearity" occurs.
+              Multicollinearity is when there is a strong relationship among the independent variables.
+              Ridge regression is very common with polynomial regression to generalize and to reduce overfitting.
+              Important hyperparameters in Ridge are "alpha" and "normalization".
           </p>
       </dd>
 
-      <dt class="col-sm-3"> Model Evaluation</dt>
+      <dt class="col-sm-3">Model Evaluation and Refinement</dt>
       <dd class="col-sm-9">
           <p>
               For evaluating a model always use visualization and measures.
+              The term "In-Sample Evaluation" refers to evaluating the model on a training set.
+              In contrast, the term "Out-of-Sample Evaluation" refers to evaluating the model on a test set.
+              The performance of the model in "Out-of-Sample Evaluation" should approximate the performance of the model in real world.
+              When you build a model on the training set and report the perfoamcen on the test set. You should combine train and test sets to train the model on whole data.
+              This final model should be used in the deployment time.
           </p>
+          <p>
+              How to split the datasets? "x_train, x_test, y_train, y_test = sklearn.model_selection.train_test_split(x_data, y_data, test_size=0.3, random_state=0)".
+          </p>
+          <p>
+              Generalization error: how well our model predicts unseen samples. The error on test set is a proxy for this error.
+              Cross validation is an out-of-sample evaluation technique used to find a precise approximation for the generalization error.
+              To apply cross validation, one can use the function "sklearn.model_selection.cross_val_score(model, x_data, y_data, cv=k)" where cv is the number of folds.
+              The output will be a numpy array of scores on the test set of each fold. Usually we report the mean of the scores.
+              To get the predictions, we can use "yhat = sklearn.model_selection.cross_val_predict(model,x_data,y_data, cv=k)".
+              The output is a list of predictions for test samples in each fold.
+          </p>
+          <P>
+            Underfitting means that the model is too simple (low number of parameters) to fit to a training set.
+            This phenomenon is known as "high bias".
+              The bias error can be seen as the error on the training set.
+              A model with "high bias" fits loosely to the training data and oversimplifies the model.
+              A model with "high bias" always leads to high error on the training and test data.
+              Overfitting means that the model is too large (high number of parameters) to generalize to unseen samples.
+              When a model overfits, we say the model has "high variance".
+              Variance error can be seen as the error on the test set.
+              A model with high variance fits too much to training data and does not generalize on the test data.
+              As a result, such models perform very well on training data but has high error rates on test data.
+              If a model is too simple and has very few parameters then it may have "high bias and low variance".
+              On the other hand if our model has large number of parameters then it’s going to have "high variance and low bias".
+              Model selection process is about finding the "bias-variance tradeoff".
+              By increasing the number of parameters usually the error on the training set decreases.
+              The generalization error also decreases until a point on which the generalization error starts to increase.
+              Anything on the left side of this point represents underfitting.
+              Anyhing on the right side of this point represents overfitting.
+              This point, on which the generalization error is minimum, represents the best number of parameters for the model.
+              Of course, we have still a bit of error in this point. This error is because of random noise that we may have in the data.
+              The error that comes from the noise is known as "irreducible error".
+              If the error of the best model (selected at the best point above) is too large then the model is not good enough for fitting to the data.
+          </P>
+          <P>
+              Grid Search: To define the best value for hyperparamrters we can use grid search over predefined values for each parameter.
+              The main idea behind the grid search is that the model is evaluated on the "validation set".
+              The best combination of hyperparameters are those that minimize the error on the validation set.
+              Grid search CV (cross validation) takes a model, a scoring function, the number of folds, and predefined values for hyperparameters.
+              The output would be the score of the model for each combination of hyperparameter values.
+              The constructor of grid search is "sklearn.model_selection.GridSearchCV(model, parameters, cv=k)".
+              parameters is a dictionary whose keys are the name of hyperparameter  used for the model definition and the values are list of hyperparameter values.
+              The best model is in "best_model = grid.best_estimator_".
+          </P>
           <p>
               Residual Plot: A good way to visualize the variance of the data is to use a residual plot.
               What is a residual?
@@ -330,18 +394,15 @@
               (1) R^2 / R-squared ("LinearModel.score(x,y) in sklearn" and "sklearn.metrics.r2_score(y, yhat)" for the Polynomial estimators,
               and (2) Mean Squared Error (MSE)("sklearn.metrics.mean_squared_error(x,y)").
               R-squared: also known as the coefficient of determination, is a measure to indicate how close the data is to the fitted regression line.
-              The value of the R-squared is the percentage of variation of the response variable (y) that is explained by a linear model.
+              The value of the R-squared is the percentage of variation of the response variable (y) that is explained by a linear model. More formally, R^2 = 1- (MSE of the predictions)/(MSE of the average estimator).
+              A negative R^2 is a sign of overfitting.
               Mean Squared Error (MSE):The Mean Squared Error measures the average of the squares of errors. That is, the difference between actual value (y) and the estimated value (ŷ).
           </p>
           <p>
           </p>
       </dd>
 
-      <dt class="col-sm-3"> Model Refinement</dt>
-      <dd class="col-sm-9">
-      <p></p>
-      <p></p>
-      </dd>
+
 
 <!--    <dt class="col-sm-3"> </dt>-->
 <!--    <dd class="col-sm-9">-->
