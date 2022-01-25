@@ -211,6 +211,138 @@
           <p>
       </dd>
 
+      <dt class="col-sm-3"> Data Pre-processing</dt>
+      <dd class="col-sm-9">
+          <p> (1) Identify and handleing missing values (NaN or np.nan in python). A missing value is captured usually as "?", "N/A", "0" or just a blank cell.
+          How to deal with them? There different possibilities such as
+              (1.1) Check with the data collection source to know what the actual value should be.
+              (1.2) Remove the samples in which one attribute has a missing value.
+              (1.3) Remove the variable from the dataset. Choose this option if the size of the data is big.
+              (1.4) Replace the missing value by the average of that attribute over other data samples.
+              (1.5) Replace the missing value by the most frequent value of the attribute if the sample is categorical and on which you cannot compute the average.
+              (1.6) Leave the missing value as missing value.
+          </p>
+          <p> (2) Data formatting: Data should be consistent and easily understandable.
+              Before cleaning the data, think if this unclean data contain some information for your task. If not, then you can clean the data.
+              To do so, you can check for
+              (2.1) writing style (uppercase, lowercase, etc),
+              (2.2) data time format,
+              (2.3) abbreviation (NY, New York, etc), and
+              (2.4) the data types of attributes and recast them if being not meaningful.
+          </p>
+          <p> (3) Data normalization (centering/scaling): It helps to make a fair comparison between variables and also an efficient computation.
+              The problem is that attributes (features) with large-scaled values (Salary vs Age) affect predictions while not being more important than other attributes.
+              How to normalize attribute values?
+              (3.1) Max-scaling: x_new = x_old / x_max, where 0< x_new < +1
+              (3.2) Min-Max: x_new = (x_old - x_min)/(x_max - x_min),  where 0< x_new < +1, and
+              (3.3) Z-score: x_new = (x_old - x_mean)/ x_std, where -1< x_new < +1.
+          </p>
+          <p> (4) Data binning: The idea is to grop values into bins. It converts numerical values into categorical values.  Binning can improve the accuracy of prediction models.
+          Binning also help to have a better understanding of the data distribution. In python, we use linspace and cut function in pandas.
+          </p>
+          <p> (5) Turning categorical values to numerical variables: The solution is 1-hot encoding. To do so, add dummy variables for each unique category and assign 0 and 1 in each category.
+                In python, we can use pandas.get_dummies(df['x']) to convert attribute x to numerical variables.
+          </p>
+      </dd>
+
+
+      <dt class="col-sm-3"> Exploratory Data Analysis (EDA) </dt>
+      <dd class="col-sm-9">
+          <p> The main goal of EDA is to summarize main characteristics of data,  gain a better understanding of data, uncover relationships between attributes (features or variables), and extract important variables.
+              The main question in EDA is that what are the characteristics which have the most impact on the value of target attribute.
+          </p>
+          Descriptive statistics: provide mean, min, max and std of values of an attribute (variable) in a dataset.
+          How to get them? In python, we use (1) pandas.dataframe.describe(include="all"),   (2) for categorical variables we use df['x'].value_counts().to_frame(),
+          (3) Boxplots are useful charts for EDA. They help to see the distribution of a variable and also to find the outliers easily.
+          The Package ''seaborn'' has the function ''boxplot'' with which you can easily draw a boxplot between a categorical variable (x) and continues variable (y).
+           and (4) Scatter plots are used to find relation between two continues variables. Usually, target variable is on y axis and independent variable is on x axis.
+          To draw scatter plot, the package "matplotlib" (e.g. "plt.scatter(x,y)") is very handy.
+          <p>
+              Grouping: This technique is applied to categorical variables using "pandas.dataframe.groupby()". The idea is to group the data into subsets according to the categories of a one variable.
+              To visualize the results of the groupby() function, pivot tables are very handy. In pivot table, one independent variable is x-axis, the other independent variable is on y-axis and the target variable is the value of the cells.
+              The other way to visualize grouping is heatmap. Heatmap is a great way to draw the target variable over multiple variables.
+              The package "matplotlib" has function "pcolor(d_pivot, cmap="RdBu")" to draw a heatmap.
+          </p>
+          <p>
+              Correlation: The package "seaborn" has the function "regplot" to draw correlation line between two variables. Pearson correlation is common way to see to what degree are interdependent.
+              To compute the Pearson correlation, one can use "scistat" package. It has a function named "stat.pearsonr(df['x'],df['y'])".
+              Correlation coefficients can also be visualized by heatmap. The heatmap shows the correlation coefficient between evey two variables in the dataset.
+          </p>
+          <p>
+            Chi-Square: The correlation coefficient works on two continues variables. What should find the interdependence between categorical variables?
+              This is what we call "association". The Chi-Square tests a null hypothesis that variables are independent. We try to reject this hypothesis, i.e., we like to have target label be dependent on an attribute variable.
+              Please note that Chi-Square can also be used to test if predictions of a model and the ground truth labels are dependent.
+              In python, we use "scipy.stats.chi2_contigency(cont_table, correction=True)". It gives us a p_value. If p_values < 0.05 then we reject the null hypothesis.
+          </p>
+      </dd>
+
+      <dt class="col-sm-3"> Model Development</dt>
+      <dd class="col-sm-9">
+          <p>
+             The output of the EDA step should be a subset of features to be used as "predictors" in our model development.
+              These predictors are known as independent variables which help to estimate the values of a target variable or dependent variables.
+          </p>
+          <p>
+              Regression: When the target variable is a continues value, we use regression models.
+              (1) LinearRegression:
+              (1.1) Simple Linear Regression (SLR): y = b_0 + b_1 * x, b_0 is the intercept and b_1 is the coeficient. Note that this function is defined using only one predictor.
+              You can easily get SLR from sklearn.linear_models.LinearRegression, or regplot. You can get the intercept and coeficient from the model in sklearn.
+              (1.2) Multiple Linear Regression (MLR): y = b_0 + b_1* x_1 + b_2*x_2 + ... + b_n*x_n. This model can be implemented also using sklearn.linear_models.LinearRegression.
+              (1.3) Polynomial Regression (PR): y= b_0 + b_1 *x_1 +b_2* (x_2)^2 + ....
+              As we see the estimator is still a linear function but over ploynomial features.
+              There is a degree for ploynomiality, i.e. 2 in the above equation. This should be given to the constructor, that is again "sklearn.linear_models.LinearRegression".
+              The only difference from MLR is that features should be transformed to the ploynomial space.
+              sklearn has a funtion for it, i.e. "z = sklearn.preprocessing.PolynomialFeatures(degree=2).fit_transform(df['x1','x2'])"
+              "z" contains the ploynomial features over x1 and x2 from the EDA. For 4 features we get 15 polynomial features.
+              We can give "z" to the "model= LinearRegression() model.fit(z)".
+              An important point in PR is that in order to combine polynomial combinations of features, the feature values should in the same scale.
+              So before running polynomialization over predictors, we should scale their values "sklearn.preprocessing.StandardScaler()".
+              If we use "pipe = sklearn.pipeline.Pipeline([StandardScaler(),PolynomialFeatures(degree=2,include_bias=False),LinearRegression()])" then this pipe can be fit directly to the raw features df['x1','x2'].
+          </p>
+      </dd>
+
+      <dt class="col-sm-3"> Model Evaluation</dt>
+      <dd class="col-sm-9">
+          <p>
+              For evaluating a model always use visualization and measures.
+          </p>
+          <p>
+              Residual Plot: A good way to visualize the variance of the data is to use a residual plot.
+              What is a residual?
+              The difference between the observed value (y) and the predicted value (Yhat) is called the residual (e). When we look at a regression plot, the residual is the distance from the data point to the fitted regression line.
+              So what is a residual plot?
+              A residual plot is a graph that shows the residuals on the vertical y-axis and the independent variable on the horizontal x-axis.
+              What do we pay attention to when looking at a residual plot?
+              We look at the spread of the residuals:
+              - If the points in a residual plot are randomly spread out around the x-axis, then a linear model is appropriate for the data.
+              Why is that? Randomly spread out residuals means that the variance is constant, and thus the linear model is a good fit for this data.
+          </p>
+          <p>
+              Regression: For Simple linear regression (SLR) models, we use visualization using regression ("seaborn.regplot(x,y)") and residual plot ("seaborn.residplot(x,y)").
+              In regression plot we check the correlation and the spread of samples around predicted lines.
+              The more spread samples indicate more variance in results and weaker models.
+              If the points in a residual plot are randomly spread out around the x-axis, then a linear model is appropriate for the data.
+              Why is that? Randomly spread out residuals means that the variance is constant, and thus the linear model is a good fit for this data.
+              For Multiple Linear Regression (MLP) one way to look at the fit of the model is by looking at the distribution plotOne way to look at the fit of the model is by looking at the distribution plot. We can look at the distribution of the fitted values that result from the model and compare it to the distribution of the actual values (ax1=seaborn.distplot(y, hist=False, color="r", label="Actual Value") sns.distplot(Y_hat, hist=False, color="b", label="Fitted Values" , ax=ax1)).
+              We can look at the distribution of the fitted values that result from the model and compare it to the distribution of the actual values.
+              When evaluating our models, not only do we want to visualize the results, but we also want a quantitative measure to determine how accurate the model is.
+              Two very important measures that are often used in Statistics to determine the accuracy of a model are:
+              (1) R^2 / R-squared ("LinearModel.score(x,y) in sklearn" and "sklearn.metrics.r2_score(y, yhat)" for the Polynomial estimators,
+              and (2) Mean Squared Error (MSE)("sklearn.metrics.mean_squared_error(x,y)").
+              R-squared: also known as the coefficient of determination, is a measure to indicate how close the data is to the fitted regression line.
+              The value of the R-squared is the percentage of variation of the response variable (y) that is explained by a linear model.
+              Mean Squared Error (MSE):The Mean Squared Error measures the average of the squares of errors. That is, the difference between actual value (y) and the estimated value (ŷ).
+          </p>
+          <p>
+          </p>
+      </dd>
+
+      <dt class="col-sm-3"> Model Refinement</dt>
+      <dd class="col-sm-9">
+      <p></p>
+      <p></p>
+      </dd>
+
 <!--    <dt class="col-sm-3"> </dt>-->
 <!--    <dd class="col-sm-9">-->
 <!--      <p>This beloved book by E. B. White, author of Stuart Little and The Trumpet of the Swan, is a classic of children's literature that is "just about perfect."</p>-->
