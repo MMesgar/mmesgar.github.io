@@ -402,7 +402,86 @@
           </p>
       </dd>
 
+          <dt class="col-sm-3"> Data Visualization</dt>
+          <dd class="col-sm-9">
+            <p> Line plot: A line plot displays a series of data points called "markers" connected by straight line segments.
+                Use line plot when you have a continuous data set.
+                These are best suited for "trend-based visualizations of data over a period of time".
+                "panda.dataframe.plot(kind='line')" plots a line plot.
+                Line plot is also a handy tool to display several dependent variables against one independent variable.
+                However, it is recommended that no more than 5-10 lines on a single graph to keep the graph interpretable.
+            </p>
+            <p>Area plot:
+                This plot is a cumulative plot, also knows as a "Stacked Line Plot" or "**"Area plot".
+                Area plots are stacked by default.
+                To produce a stacked area plot, each column must be either all positive or all negative values.
+                Any `NaN`, i.e. not a number, values will default to 0.
+                To produce an unstacked plot, set parameter "stacked" to value "False".
+            </p>
+              <p>Histogram plot:
+                  A histogram is a way of representing the "frequency" distribution of numeric dataset.
+                  It partitions the x-axis (which usually represent a feature or a column in df) into "bins", assigns each data point (that is target labels) in our dataset to a bin, and then counts the number of data points (target labels) that have been assigned to each bin.
+                  So the y-axis is the frequency or the number of data points in each bin.
+                  We can also plot multiple histograms on the same plot.
+                  Note that we can change the bin size and usually one needs to tweak it so that the distribution is displayed nicely.
+                  How to get the bins? "count, bin_edges = numpy.histogram(df['column_name'],bin_size:int)".
+                  By default, the `histrogram` method breaks up the dataset into 10 bins.
+              </p>
+              <p>Bar plot:
+                  A bar plot represents data where the "height" of the bars represents the magnitude/size of the feature/variable.
+                  Bar graphs usually represent "numerical" and "categorical" variables grouped in intervals.
+                  In vertical bar graphs, the x-axis is used for labelling, and the height of bars on the y-axis corresponds to the magnitude of the variable being measured.
+                  Vertical bar graphs are particularly useful in analyzing "time series data".
+                  One disadvantage is that they lack space for text labelling at the foot of each bar.
+                  Sometimes it is more practical to represent the data horizontally, especially if you need more room for labelling the bars.
+                  In horizontal bar graphs, the y-axis is used for labelling, and the length of bars on the x-axis corresponds to the magnitude of the variable being measured.
+              </p>
+              <p> Pie chart:
+                  A pie chart is a circular statistical graphic divided into slices to illustrate numerical proportion.
+                  There are some very vocal opponents to the use of pie charts under any circumstances. Most argue that pie charts fail to accurately display data with any consistency.
+                  Bar charts are much better when it comes to representing the data in a consistent way and getting the message across.
+              </p>
+              <p> Box plot:
+                  A boxplot is a way of statistically representing the distribution of given data through five main dimensions.
+                  The first dimension is minimum, which is the smallest number in the sorted data.
+                  Its value can be obtained by subtracting 1.5 times the IQR where IQR is interquartile range from the first quartile.
+                  The second dimension is first quartile which is 25% of the way through the sorted data.
+                  In other words, 1/4 of the data points are less than this value.
+                  The third dimension is median, which is the median of the sorted data.
+                  The fourth dimension is third quartile, which is 75% of the way through the sorted data.
+                  In other words, 3/4 of the data points are less than this value.
+                  And the final dimension is maximum, which is the highest number in the sorted data where maximum equals third quartile summed with 1.5 multiplied by IQR.
+                  Finally, boxplots also display outliers as individual dots that occur outside the upper and lower extremes.
+              </p>
+              <p> Scatter plot:
+                  A scatter plot is a type of plot that displays values pertaining to typically two variables against each other.
+                  Usually it is a dependent variable to be plotted against an independent variable in order to determine if any correlation between the two variables exists.
+              </p>
+              <p> Bubble plot:
+                  A bubble plot is a variation of the scatter plot that displays three dimensions of data (x, y, z).
+                  The data points are replaced with bubbles, and the size of the bubble is determined by the third variable `z`, also known as the weight.
+                  In `maplotlib`, we can pass in an array or scalar to the parameter `s` to `plot()`, that contains the weight of each point.
+              </p>
+              <p> Waffel chart:
+                  This is an interesting visualization that is normally created to display progress toward goals.
+                  It is commonly an effective option when you are trying to add interesting visualization features to a visual that consists mainly of cells, such as an Excel dashboard.
 
+              </p>
+              <p> Word clouds:
+                  This (also known as text clouds or tag clouds) work in a simple way: the more a specific word appears in a source of textual data (such as a speech, blog post, or database), the bigger and bolder it appears in the word cloud.
+                  A Python package already exists in Python for generating word clouds.
+                  It is called "word_cloud".
+              </p>
+              <p>
+                  Regression plots:
+                  It is simply a scatter plot with a fitted linear regression line on it.
+                  It can be easily generated by the seaborn package.
+              </p>
+              <p> Geographical maps:
+                  It helps to bind data to geographical maps for choropleth visualizations as well as passing visualizations as markers on the map.
+              </p>
+              
+         </dd>
 
 <!--    <dt class="col-sm-3"> </dt>-->
 <!--    <dd class="col-sm-9">-->
