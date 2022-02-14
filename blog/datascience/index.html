@@ -398,7 +398,26 @@
               A negative R^2 is a sign of overfitting.
               Mean Squared Error (MSE):The Mean Squared Error measures the average of the squares of errors. That is, the difference between actual value (y) and the estimated value (ŷ).
           </p>
+          <p> Classification:
+              There are different model evaluation metrics: Jaccard index, F1-score, and Log Loss.
+              Let’s say y shows the true labels of the churn dataset. And y ̂ shows the predicted values by our classifier. Then we can define Jaccard as the size of the intersection divided by the size of the union of two label sets.
+              In the specific case of a binary classifier, such as this example, we can interpret these numbers as the count of true positives, false negatives, true negatives, and false positives. Based on the count of each section, we can calculate the precision and recall of each label. Precision is a measure of the accuracy, provided that a class label has been predicted. It is defined by: precision = True Positive / (True Positive + False Positive). And Recall is the true positive rate. It is defined as: Recall = True Positive / (True Positive + False Negative). So, we can calculate the precision and recall of each class. Now we’re in the position to calculate the F1 scores for each label, based on the precision and recall of that label. The F1 score is the harmonic average of the precision and recall, where an F1 score reaches its best value at 1 (which represents perfect precision and recall) and its worst at 0. I
+              Sometimes, the output of a classifier is the probability of a class label, instead of the label. For example, in logistic regression, the output can be the probability of customer churn, i.e., yes (or equals to 1). This probability is a value between 0 and 1. Logarithmic loss (also known as Log loss) measures the performance of a classifier where the predicted output is a probability value between 0 and 1
+              Decision trees are built by splitting the training set into distinct nodes, where one node contains all of or most of one category of the data.
+              decision trees are about testing an attribute and branching the cases based on the result of the test. Each internal node corresponds to a test, and each branch corresponds to a result of the test, and each leaf node assigns a patient to a class.
+              A decision tree can be constructed by considering the attributes one by one. First, choose an attribute from our dataset. Calculate the significance of the attribute in the splitting of the data.
+              Next, split the data based on the value of the best attribute, then go to each branch and repeat it for the rest of the attributes. After building this tree, you can use it to predict the class of unknown cases.
+              A node in the tree is considered pure if in 100 percent of the cases, the nodes fall into a specific category of the target field. In fact, the method uses recursive partitioning to split the training records into segments by minimizing the impurity at each step. Impurity of nodes is calculated by entropy of data in the node. So, what is entropy? Entropy is the amount of information disorder or the amount of randomness in the data. The entropy in the node depends on how much random data is in that node and is calculated for each node. In decision trees, we're looking for trees that have the smallest entropy in their nodes. The entropy is used to calculate the homogeneity of the samples in that node. If the samples are completely homogeneous, the entropy is zero and if the samples are equally divided it has an entropy of one.
+              You can easily calculate the entropy of a node using the frequency table of the attribute through the entropy formula where P is for the proportion or ratio of a category.
+              We should go through all the attributes and calculate the entropy after the split and then choose the best attribute.
+              The answer is the tree with the higher information gain after splitting. So, what is information gain? Information gain is the information that can increase the level of certainty after splitting. It is the entropy of a tree before the split minus the weighted entropy after the split by an attribute.
+              So, constructing a decision tree is all about finding attributes that return the highest information gain.
+              Unfortunately, Sklearn Decision Trees does not handle categorical variables. We can still convert these features to numerical values using pandas.get_dummies() to convert the categorical variable into dummy/indicator variables.
+
+
+          </p>
           <p>
+
           </p>
       </dd>
 
@@ -482,6 +501,201 @@
               </p>
               
          </dd>
+
+      <dt class="col-sm-3"> Machine Learning </dt>
+          <dd class="col-sm-9">
+            <p> Major machine learning techniques are:
+            (1) Regression: predicting continues values. This is supervised learning.
+            (2) Classification:predicting the item class of a case. This is supervised learning.
+                Ordinal classification is a specific type of classification with IR applications such as learning to rank and product review rating.
+                Common evaluation metric for ordinal classification is MSE,MAEM which is defined as the average deviation of the predicted class from the true class.
+
+                (3) Clustering: Finding the structure of the data, summarization. This is unsupervised learning. Clustering is mostly used for discovering structure
+                in the data, summarization, and anomaly detection. It has fewer evaluation methods than supervised learning. Therefore, the clustering methods
+                generate less controlled environments.
+                (4) Associations: Associating frequent co-occurring items/events. This is unsupervised learning.
+                (5) Anomaly detection: Discovering abnormal and unusual cases. This is unsupervised learning.
+                (6) Sequence mining: Predicting next events e.g., clicking stream.
+                (7) Dimension reduction (feature selection): Reducing the size of the data. This is unsupervised learning.
+                (8) Recommendation systems: Recommending items.
+
+            </p>
+            <p>
+                Python packages for ML:
+                (1) NumPy,
+                (2) SciPy,
+                (3) ScikitLearn,
+                (4) PyTorch, and
+                (5) Keras.
+            </p>
+              <p>
+                  Regression: This is a model for predicting continues values.
+                  There are two type of  regression models: (1) Simple Regression, which  can be linear or non-linear function to relate the target variable to ONE attribute, and
+                  (2) Multiple Regressions, which can be linear and nonlinear to relate the target variable to two or more attributes (independent variables).
+                  Some applications of regression are: sales forecasting, customer satisfaction analysis, price estimation, and employment income.
+                  Why is linear regression so useful?  It's fast. It also doesn't require tuning of parameters. Linear regression is also easy to understand, and highly interpretable.
+                  Evaluation metrics: Mean Absolute Error (MAE), Mean Squared Error (MSE): the focus is geared more towards large errors,
+                  Root Mean Squared Error (RMSE) is the square root of the mean squared error. This is one of the most popular of the evaluation metrics because Root Mean Squared Error is interpretable in the same units as the response vector or Y units, making it easy to relate its information.
+                  Relative absolute error , also known as residual sum (R^2) of square, where Y bar is a mean value of Y, takes the total absolute error and normalizes it. By dividing by the total absolute error of the simple predictor. Relative squared error is very similar to relative absolute error, but is widely adopted by the data science community as it is used for calculating R-squared. R-squared is not an error per say but is a popular metric for the accuracy of your model. It represents how close the data values are to the fitted regression line. The higher the R-squared, the better the model fits your data
+                  Basically, there are two applications for multiple linear regression. First, it can be used when we would like to identify the strength of the effect that the independent variables have on the dependent variable. For example, does revision time, test anxiety, lecture attendance and gender have any effect on exam performance of students?
+                  Second, it can be used to predict the impact of changes, that is, to understand how the dependent variable changes when we change the independent variables. For example, if we were reviewing a person's health data, a multiple linear regression can tell you how much that person's blood pressure goes up or down for every unit increase or decrease in a patient's body mass index holding other factors constant
+                  .
+                  If the relation between dependent and independent variables are non-linear, then we just transform independent variables to polynomial space.
+                  Then we apply a linear regression model on the transformed features.
+                  How can I know if a problem is linear or non-linear in an easy way? To answer this question, we have to do two things. The first is to visually figure out if the relation is linear or non-linear. It's best to plot bivariate plots of output variables with each input variable. Also, you can calculate the correlation coefficient between independent and dependent variables, and if, for all variables, it is 0.7 or higher, there is a linear tendency and thus, it's not appropriate to fit a non-linear regression.
+                  How should I model my data if it displays non-linear on a scatter plot? Well, to address this, you have to use either a polynomial regression, use a non-linear regression model, or transform your data,
+                  Nearest neighbors analysis can also be used to compute values for a continuous target. In this situation, the average or median target value of the nearest neighbors is used to obtain the predicted value for the new case.
+
+              </p>
+              <p>
+                  Classification: The target attribute in classification is a categorical variable with discrete values.
+                  Here we have the types of classification algorithms and machine learning. They include decision trees, naive bayes, linear discriminant analysis, k-nearest neighbor, logistic regression, neural networks, and support vector machines.
+                  The K-Nearest Neighbors algorithm is a classification algorithm that takes a bunch of labeled points and uses them to learn how to label other points. This algorithm classifies cases based on their similarity to other cases. In K-Nearest Neighbors, data points that are near each other are said to be neighbors. K-Nearest Neighbors is based on this paradigm. Similar cases with the same class labels are near each other. Thus, the distance between two cases is a measure of their dissimilarity.
+                  There are different dissimilarity measures as well that can be used for this purpose but as mentioned, it is highly dependent on datatype and also the domain that classification is done for it.
+                  How do we choose the right K?
+                  A low value of K causes a highly complex model as well, which might result in overfitting of the model. It means the prediction process is not generalized enough to be used for out-of-sample cases.
+                  if we choose a very high value of K such as K equals 20, then the model becomes overly generalized.
+                  So, choose K equals one and then use the training part for modeling and calculate the accuracy of prediction using all samples in your test set. Repeat this process increasing the K and see which K is best for your model. For example, in our case, K equals four will give us the best accuracy.
+
+                  Logistic regression is a statistical and machine learning technique for classifying records of a dataset based on the values of the input fields.
+                  Logistic regression is analogous to linear regression but tries to predict a categorical or discrete target field instead of a numeric one.
+                  In logistic regression independent variables should be continuous. If categorical, they should be dummy or indicator coded. This means we have to transform them to some continuous value. Please note that logistic regression can be used for both binary classification and multi-class classification.
+                  Here are four situations in which logistic regression is a good candidate. First, when the target field in your data is categorical or specifically is binary. Such as zero/one, yes/no, churn or no churn, positive/negative and so on. Second, you need the probability of your prediction. For example, if you want to know what the probability is of a customer buying a product. Logistic regression returns a probability score between zero and one for a given sample of data. In fact, logistic regression predicts the probability of that sample and we map the cases to a discrete class based on that probability. Third, if your data is linearly separable. The decision boundary of logistic regression is a line or a plane or a hyper plane. A classifier will classify all the points on one side of the decision boundary as belonging to one class and all those on the other side as belonging to the other class.
+                  Indeed, the existing Linear Regression method does not really give us the probability of a customer belonging to a class, which is very desirable. We need a method that can give us the probability of falling in the class as well.
+                  logistic regression is linear regression given to the sigmoid function to get probabilities.
+                  The sigmoid function, also called the logistic function, resembles the step function and is used by the following expression in the logistic regression. T
+                  Logistic Regression is trained by negative loglikelihood cost function using backpropagation.
+                  Note MSE is non-convex and does not garuntee to get to the minimum.
+
+
+                  You can use Support Vector Machine, or SVM, as a classifier to train your model to understand patterns within the data.
+                  A Support Vector Machine is a supervised algorithm that can classify cases by finding a separator. SVM works by first mapping data to a high dimensional feature space so that data points can be categorized, even when the data are not otherwise linearly separable. Then, a separator is estimated for the data. The data should be transformed in such a way that a separator could be drawn as a hyperplane.
+                  Therefore, the SVM algorithm outputs an optimal hyperplane that categorizes new examples. Now, there are two challenging questions to consider. First, how do we transfer data in such a way that a separator could be drawn as a hyperplane? And two, how can we find the best or optimized hyperplane separator after transformation?
+                  Basically, mapping data into a higher-dimensional space is called, kernelling. The mathematical function used for the transformation is known as the kernel function, and can be of different types, such as linear, polynomial, Radial Basis Function,or RBF, and sigmoid. Each of these functions has its own characteristics, its pros and cons, and its equation.
+                  Also, as there's no easy way of knowing which function performs best with any given dataset, we usually choose different functions in turn and compare the results.
+                  How do we find the right or optimized separator after transformation?
+                  SVMs are based on the idea of finding a hyperplane that best divides a data set into two classes as shown here.
+                  One reasonable choice as the best hyperplane is the one that represents the largest separation or margin between the two classes. So the goal is to choose a hyperplane with as big a margin as possible. Examples closest to the hyperplane are support vectors. It is intuitive that only support vectors matter for achieving our goal. And thus, other trending examples can be ignored. We tried to find the hyperplane in such a way that it has the maximum distance to support vectors. Please note that the hyperplane and boundary decision lines have their own equations.
+                  The hyperplane is learned from training data using an optimization procedure that maximizes the margin. And like many other problems, this optimization problem can also be solved by gradient descent.
+                  You can make classifications using this estimated line. It is enough to plug in input values into the line equation. Then, you can calculate whether an unknown point is above or below the line. If the equation returns a value greater than 0, then the point belongs to the first class which is above the line, and vice-versa. The two main advantages of support vector machines are that they're accurate in high-dimensional spaces. And they use a subset of training points in the decision function called, support vectors, so it's also memory efficient. The disadvantages of Support Vector Machines include the fact that the algorithm is prone for over-fitting if the number of features is much greater than the number of samples. Also, SVMs do not directly provide probability estimates, which are desirable in most classification problems. And finally, SVMs are not very efficient computationally if your dataset is very big, such as when you have more than 1,000 rows.
+                  in which situation should I use SVM? Well, SVM is good for image analysis tasks, such as image classification and hand written digit recognition. Also, SVM is very effective in text mining tasks, particularly due to its effectiveness in dealing with high-dimensional data. For example, it is used for detecting spam, text category assignment and sentiment analysis. Another application of SVM is in gene expression data classification, again, because of its power in high-dimensional data classification.
+                  SVM can also be used for other types of machine learning problems, such as regression, outlier detection and clustering
+
+                  There are two reasons why Mean Squared Error(MSE) is a bad choice for binary classification problems:
+                  First, using MSE means that we assume that the underlying data has been generated from a normal distribution (a bell-shaped curve). In Bayesian terms this means we assume a Gaussian prior. While in reality, a dataset that can be classified into two categories (i.e binary) is not from a normal distribution but a Bernoulli distribution
+                  Secondly, the MSE function is non-convex for binary classification. In simple terms, if a binary classification model is trained with MSE Cost function, it is not guaranteed to minimize the Cost function. This is because MSE function expects real-valued inputs in range(-∞, ∞), while binary classification models output probabilities in range(0,1) through the sigmoid/logistic function.
+              </p>
+
+            <p>
+                Clustering:
+                A cluster is a group of data points or objects in a dataset that are similar to other objects in the group, and dissimilar to datapoints in other clusters.
+                Classification algorithms predict categorical classed labels. This means assigning instances to predefined classes.
+                Generally speaking, classification is a supervised learning where each training data instance belongs to a particular class. In clustering however, the data is unlabeled and the process is unsupervised.
+                In the retail industry, clustering is used to find associations among customers based on their demographic characteristics and use that information to identify buying patterns of various customer groups.
+                Also, it can be used in recommendation systems to find a group of similar items or similar users and use it for collaborative filtering, to recommend things like books or movies to customers.
+                In banking, analysts find clusters of normal transactions to find the patterns of fraudulent credit card usage. Also they use clustering to identify clusters of customers. For instance, to find loyal customers versus churned customers. In the insurance industry, clustering is used for fraud detection in claims analysis, or to evaluate the insurance risk of certain customers based on their segments. In publication media, clustering is used to auto categorize news based on his content or to tag news, then cluster it so as to recommend similar news articles to readers.
+                In medicine, it can be used to characterize patient behavior, based on their similar characteristics. So as to identify successful medical therapies for different illnesses or in biology, clustering is used to group genes with similar expression patterns or to cluster genetic markers to identify family ties.
+                Generally clustering can be used for one of the following purposes: (1) exploratory data analysis, (2) summary generation or reducing the scale,
+                (3) outlier detection-especially to be used for fraud detection or noise removal, (4) finding duplicates and datasets or as a pre-processing step for either prediction,
+                (5) other data mining tasks or (6) as part of a complex system.
+
+                There are different clustering algorithms and their characteristics.
+                (1) Partition-based clustering is a group of clustering algorithms that produce sphere-like clusters, such as; K-Means, K-Medians or Fuzzy c-Means.
+                These algorithms are relatively efficient and are used for medium and large sized databases.
+                (2) Hierarchical clustering algorithms produce trees of clusters, such as agglomerative and divisive algorithms.
+                This group of algorithms are very intuitive and are generally good for use with small size datasets.
+                (3) Density-based clustering algorithms produce arbitrary shaped clusters.
+                They are especially good when dealing with spatial clusters or when there is noise in your data set.
+
+
+                K-Means can group data only unsupervised based on the similarity of customers to each other.
+                K-Means is a type of partitioning clustering, that is, it divides the data into K non-overlapping subsets or clusters without any cluster internal structure or labels. This means, it's an unsupervised algorithm. Objects within a cluster are very similar, and objects across different clusters are very different or dissimilar.
+                The key concept of the K-Means algorithm is that it randomly picks a center point for each cluster. It means we must initialize K which represents number of clusters.
+                you will form a matrix where each row represents the distance of a customer from each centroid. It is called the Distance Matrix. The main objective of K-Means clustering is to minimize the distance of data points from the centroid of this cluster and maximize the distance from other cluster centroids. So, in this step, we have to find the closest centroid to each data point. We can use the distance matrix to find the nearest centroid to datapoints. Finding the closest centroids for each data point, we assign each data point to that cluster.
+                Here, error is the total distance of each point from its centroid. It can be shown as within-cluster sum of squares error. Intuitively, we try to reduce this error. It means we should shape clusters in such a way that the total distance of all members of a cluster from its centroid be minimized.
+                Please note that whenever a centroid moves, each points distance to the centroid needs to be measured again. Yes, K-Means is an iterative algorithm and we have to repeat steps two to four until the algorithm converges. In each iteration, it will move the centroids, calculate the distances from new centroids and assign data points to the nearest centroid. It results in the clusters with minimum error or the most dense clusters.
+                However, as it is a heuristic algorithm, there is no guarantee that it will converge to the global optimum and the result may depend on the initial clusters. It means, this algorithm is guaranteed to converge to a result, but the result may be a local optimum i.e. not necessarily the best possible outcome. To solve this problem, it is common to run the whole process multiple times with different starting conditions. This means with randomized starting centroids, it may give a better outcome. As the algorithm is usually very fast, it wouldn't be any problem to run it multiple times.
+                how do we calculate the accuracy of k-Means clustering? One way is to compare the clusters with the ground truth, if it's available. However, because k-Means is an unsupervised algorithm we usually don't have ground truth in real world problems to be used.
+                This value is the average distance between data points within a cluster. Also, average of the distances of data points from their cluster centroids can be used as a metric of error for the clustering algorithm.
+                The correct choice of K is often ambiguous because it's very dependent on the shape and scale of the distribution of points in a dataset.
+                one of the techniques that is commonly used is to run the clustering across the different valuesof K and looking at a metric of accuracy for clustering.
+                This metric can be mean, distance between data points and their cluster's centroid, which indicate how dense our clusters are or, to what extent we minimize the error of clustering. Then, looking at the change of this metric, we can find the best value for K.
+                the value of the metric as a function of K is plotted and the elbow point is determined where the rate of decrease sharply shifts. It is the right K for clustering. This method is called the elbow method.
+
+
+                Agglomerative: Hierarchical clustering algorithms build a hierarchy of clusters where each node is a cluster consisting of the clusters of its daughter nodes.
+                Strategies for hierarchical clustering generally fall into two types, divisive and agglomerative.
+                Divisive is top down, so you start with all observations in a large cluster and break it down into smaller pieces. Think about divisive as dividing the cluster.
+                Agglomerative is the opposite of divisive. So it is bottom up, where each observation starts in its own cluster and pairs of clusters are merged together as they move up the hierarchy.
+                Agglomeration means to amass or collect things, which is exactly what this does with the cluster.
+                The agglomerative approach is more popular among data scientists.
+                This method builds the hierarchy from the individual elements by progressively merging clusters using a distance matrix.
+                In the next step, the closest distances between the Vancouver cluster and the Edmonton cluster. Forming a new cluster, the data in the matrix table gets updated. Essentially, the rows and columns are merged as the clusters are merged and the distance updated. This is a common way to implement this type of clustering and has the benefit of caching distances between clusters. In the same way, agglomerative algorithm proceeds by merging clusters, and we repeat it until all clusters are merged and the tree becomes completed.
+                How can we calculate the distance between clusters?
+                We can use different criteria to find the closest clusters and merge them. In general, it completely depends on the data type, dimensionality of data and most importantly, the domain knowledge of the data set. In fact, different approaches to defining the distance between clusters distinguish the different algorithms.
+                The first one is called single linkage clustering. Single linkage is defined as the shortest distance between two points in each cluster, such as point a and b.
+                Next up is complete linkage clustering. This time, we are finding the longest distance between the points in each cluster, such as the distance between point a and b.
+                The third type of linkage is average linkage clustering or the mean distance. This means we're looking at the average distance of each point from one cluster to every point in another cluster.
+                The final linkage type to be reviewed is centroid linkage clustering. Centroid is the average of the feature sets of points in a cluster. This linkage takes into account the centroid of each cluster when determining the minimum distance.
+                Hierarchical clustering is typically visualized as a dendrogram.
+                Each merge is represented by a horizontal line. The y-coordinate of the horizontal line is the similarity of the two clusters that were merged.
+                By moving up from the bottom layer to the top node, a dendrogram allows us to reconstruct the history of merges that resulted in the depicted clustering. Essentially, hierarchical clustering does not require a prespecified number of clusters. However, in some applications, we want a partition of disjoint clusters just as in flat clustering. In those cases, the hierarchy needs to be cut at some point.
+                There are three main advantages to using hierarchical clustering. First, we do not need to specify the number of clusters required for the algorithm. Second, hierarchical clustering is easy to implement. And third, the dendrogram produced is very useful in understanding the data.
+                There are some disadvantages as well. First, the algorithm can never undo any previous steps. So for example, the algorithm clusters two points and later on, we see that the connection was not a good one. The program can not undo that step.
+                Second, the time complexity for the clustering can result in very long computation times in comparison with efficient algorithms such as K-means. Finally, if we have a large data set, it can become difficult to determine the correct number of clusters by the dendrogram.
+                Now, lets compare hierarchical clustering with K-means. K-means is more efficient for large data sets. In contrast to K-means, hierarchical clustering does not require the number of cluster to be specified. Hierarchical clustering gives more than one partitioning depending on the resolution or as K-means gives only one partitioning of the data. Hierarchical clustering always generates the same clusters, in contrast with K-means, that returns different clusters each time it is run, due to random initialization of centroids.
+
+                DBSCAN:
+                A density-based clustering algorithm which is appropriate to use when examining spatial data.
+                Most of the traditional clustering techniques such as K-Means, hierarchical, and Fuzzy clustering can be used to group data in an unsupervised way. However, when applied to tasks with arbitrary shaped clusters or clusters within clusters, traditional techniques might not be able to achieve good results, that is elements in the same cluster might not share enough similarity or the performance may be poor. Additionally, while partitioning based algorithms such as K-Means may be easy to understand and implement in practice, the algorithm has no notion of outliers that is, all points are assigned to a cluster even if they do not belong in any.
+                In the domain of anomaly detection, this causes problems as anomalous points will be assigned to the same cluster as normal data points. The anomalous points pull the cluster centroid towards them making it harder to classify them as anomalous points.
+                In contrast, density-based clustering locates regions of high density that are separated from one another by regions of low density. Density in this context is defined as the number of points within a specified radius.
+                The wonderful attributes of the DBSCAN algorithm is that it can find out any arbitrary shaped cluster without getting effected by noise.
+                DBSCAN stands for Density-Based Spatial Clustering of Applications with Noise.
+                DBSCAN works on the idea that if a particular point belongs to a cluster it should be near to lots of other points in that cluster. It works based on two parameters: radius and minimum points. R determines a specified radius that if it includes enough points within it, we call it a dense area. M determines the minimum number of data points we want in a neighborhood to define a cluster.
+                To see how DBSCAN works, we have to determine the type of points. Each point in our dataset can be either a core, border, or outlier point.
+                The whole idea behind the DBSCAN algorithm is to visit each point and find its type first, then we group points as clusters based on their types.
+                Let's pick a point randomly. First, we check to see whether it's a core data point. So, what is a core point? A data point is a core point if within our neighborhood of the point there are at least M points.
+                What is a border point? A data point is a border point if A; its neighbourhood contains less than M data points or B; it is reachable from some core point.
+                Here, reachability means it is within our distance from a core point.
+                What is an outlier? An outlier is a point that is not a core point and also is not close enough to be reachable from a core point.
+                We continue and visit all the points in the dataset and label them as either core, border, or outlier. The next step is to connect core points that are neighbors and put them in the same cluster. So, a cluster is formed as at least one core point plus all reachable core points plus all their borders.
+                It's simply shapes all the clusters and finds outliers as well.
+                It can even find a cluster completely surrounded by a different cluster. DBSCAN has a notion of noise and is robust to outliers. On top of that, DBSCAN makes it very practical for use in many real-world problems because it does not require one to specify the number of clusters such as K in K-means.
+
+            </p>
+              <p>
+                  Recommendation systems:
+                  People tend to like things in the same category or things that share the same characteristics.
+                  People also tend to have similar tastes to those of the people they’re close to in their lives. Recommender systems try to capture these patterns and similar behaviors, to help predict what else you might like.
+                  Recommender systems are even used to personalize your experience on the web. For example, when you go to a news platform website, a recommender system will make note of the types of stories that you clicked on and make recommendations on which types of stories you might be interested in reading in future.
+                  One of the main advantages of using recommendation systems is that users get a broader exposure to many different products they might be interested in. This exposure encourages users towards continual usage or purchase of their product. Not only does this provide a better experience for the user but it benefits the service provider, as well, with increased potential revenue and better security for its customers.
+                  There are generally 2 main types of recommendation systems: Content-based and collaborative filtering. The main difference between each, can be summed up by the type of statement that a consumer might make.
+                  The main paradigm of a Content-based recommendation system is driven by the statement: “Show me more of the same of what I've liked before."
+                  Content-based systems try to figure out what user's favorite aspects of an item are, and then make recommendations on items that share those aspects.
+                  Collaborative filtering is based on a user saying, “Tell me what's popular among my neighbors because I might like it too”.
+                  Collaborative filtering techniques find similar groups of users, and provide recommendations based on similar tastes within that group.
+                  In short, it assumes that a user might be interested in what similar users are interested in.
+                  In terms of implementing recommender systems, there are 2 types: Memory-based and Model-based. In memory-based approaches, we use the entire user-item dataset to generate a recommendation system. It uses statistical techniques to approximate users or items.
+                  In model-based approaches, a model of users is developed in an attempt to learn their preferences. Models can be created using Machine Learning techniques like regression, clustering, classification, and so on.
+
+                  A Content-based recommendation system tries to recommend items to users based on their profile. The user's profile revolves around that user's preferences and tastes. It is shaped based on user ratings, including the number of times that user has clicked on different items or perhaps even liked those items. The recommendation process is based on the similarity between those items. Similarity or closeness of items is measured based on the similarity in the content of those items. When we say content, we're talking about things like the items category, tag, genre, and so on.
+                  Such a model is very efficient. However, it fails to explore to other samples in the dataset.
+                  Since keeping categorical features in a list format isn't optimal for the content-based recommendation system technique, we transform these features to  use the One Hot Encoding technique.
+                  Advantages and Disadvantages of Content-Based Filtering
+                  Advantages of Content-based recommendation system are: (1) Learns user's preferences, and (2)Highly personalized for the user
+                  Disadvantages are: (1) Doesn't take into account what others think of the item, so low quality item recommendations might happen
+                  (2) Extracting data is not always intuitive, and (3) Determining what characteristics of the item the user dislikes or likes is not always obvious
+
+                  Collaborative filtering is based on the fact that relationships exist between products and people's interests.
+                  Collaborative filtering has basically two approaches: user-based and item-based. User-based collaborative filtering is based on the user similarity or neighborhood. Item-based collaborative filtering is based on similarity among items.
+                  In user-based collaborative filtering, we have an active user for whom the recommendation is aimed. The collaborative filtering engine first looks for users who are similar. That is users who share the active users rating patterns. Collaborative filtering basis this similarity on things like history, preference, and choices that users make when buying, watching, or enjoying something.
+                  For instance, if two users are similar or are neighbors in terms of their interested movies, we can recommend a movie to the active user that her neighbor has already seen.
+                  In the user-based approach, the recommendation is based on users of the same neighborhood with whom he or she shares common preferences. For example, as User 1 and User 3 both liked Item 3 and Item 4, we consider them as similar or neighbor users, and recommend Item 1 which is positively rated by User 1 to User 3. In the item-based approach, similar items build neighborhoods on the behavior of users. Please note however, that it is not based on their contents. For example, Item 1 and Item 3 are considered neighbors as they were positively rated by both User 1 and User 2. So, Item 1 can be recommended to User 3 as he has already shown interest in Item 3.
+                  Therefore, the recommendations here are based on the items in the neighborhood that a user might prefer.
+                  There are some challenges with it as well. One of them is data sparsity. Data sparsity happens when you have a large data set of users who generally rate only a limited number of items. As mentioned, collaborative based recommenders can only predict scoring of an item if there are other users who have rated it. Due to sparsity, we might not have enough ratings in the user item dataset which makes it impossible to provide proper recommendations. Another issue to keep in mind is something called cold start. Cold start refers to the difficulty the recommendation system has when there is a new user, and as such a profile doesn't exist for them yet. Cold start can also happen when we have a new item which has not received a rating. Scalability can become an issue as well. As the number of users or items increases and the amount of data expands, collaborative filtering algorithms will begin to suffer drops in performance, simply due to growth and the similarity computation. There are some solutions for each of these challenges such as using hybrid based recommender systems.
+              </p>
+          </dd>
 
 <!--    <dt class="col-sm-3"> </dt>-->
 <!--    <dd class="col-sm-9">-->
